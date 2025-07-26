@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Psychological Injury Data Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 32px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #0a0a0a;
+            letter-spacing: -0.025em;
+        }
+
+        .logo-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 400;
+            margin-top: 2px;
+            letter-spacing: -0.01em;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 140px;
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 700;
+            color: #0a0a0a;
+            margin-bottom: 32px;
+            line-height: 1.1;
+            letter-spacing: -0.04em;
+        }
+
+        .hero-description {
+            font-size: 20px;
+            color: #4b5563;
+            margin-bottom: 48px;
+            line-height: 1.6;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.2);
+            letter-spacing: -0.01em;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px 0 rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .section-header {
+            position: sticky;
+            top: 120px;
+        }
+
+        .section-number {
+            font-size: 14px;
+            color: #3b82f6;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #0a0a0a;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+        }
+
+        .section-content p {
+            font-size: 18px;
+            color: #374151;
+            margin-bottom: 24px;
+            line-height: 1.7;
+            letter-spacing: -0.01em;
+        }
+
+        /* Alternate section styling */
+        .section:nth-child(even) {
+            background: #fafafa;
+        }
+
+        /* Examples List */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .example-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .example-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .example-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0a0a0a;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .example-card p {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Privacy Section */
+        .privacy-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 24px;
+            padding: 64px;
+            margin: 64px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .privacy-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .privacy-header h3 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #0a0a0a;
+            margin-bottom: 16px;
+            letter-spacing: -0.025em;
+        }
+
+        .privacy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 32px;
+        }
+
+        .privacy-column h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0a0a0a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .privacy-column.can-submit h4::before {
+            content: '✓';
+            color: #22c55e;
+            font-size: 20px;
+        }
+
+        .privacy-column.cannot-submit h4::before {
+            content: '✗';
+            color: #ef4444;
+            font-size: 20px;
+        }
+
+        .privacy-list {
+            list-style: none;
+            space-y: 12px;
+        }
+
+        .privacy-list li {
+            padding: 16px 0;
+            font-size: 16px;
+            color: #374151;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: color 0.2s ease;
+        }
+
+        .privacy-list li:last-child {
+            border-bottom: none;
+        }
+
+        .privacy-note {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            font-size: 15px;
+            color: #1e40af;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Support Section */
+        .support-section {
+            text-align: center;
+            padding: 80px 0;
+            background: #fafafa;
+        }
+
+        .support-title {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 32px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .support-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .support-logo {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 12px;
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .support-logo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Bottom CTA */
+        .bottom-cta {
+            text-align: center;
+            padding: 120px 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bottom-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+        }
+
+        .bottom-cta h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            position: relative;
+            letter-spacing: -0.025em;
+        }
+
+        .bottom-cta p {
+            font-size: 18px;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .cta-button-light {
+            background: white;
+            color: #0f172a;
+            box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-button-light:hover {
+            background: #f8fafc;
+            box-shadow: 0 8px 25px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            color: white;
+            padding: 64px 0 32px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 64px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-brand p {
+            color: #9ca3af;
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #9ca3af;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .section-header {
+                position: static;
+            }
+
+            .privacy-section {
+                padding: 48px 32px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero {
+                padding: 80px 0 100px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .privacy-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .support-logos {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .bottom-cta {
+                padding: 80px 0;
+            }
+
+            .privacy-section {
+                padding: 32px 24px;
+                margin: 32px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <div class="logo">AI Psychological Injury Data Center</div>
+                    <div class="logo-subtitle">Tracking the mental health effects of AI systems</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Have you or someone you know been psychologically harmed by AI?</h1>
+                <p class="hero-description">Share your story to help us understand the real-world mental health impact of conversational AI like ChatGPT, Replika, and Character.AI.</p>
+                <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform" class="cta-button">Submit Your Experience</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="section">
+        <div class="container">
+            <div class="section-grid">
+                <div class="section-header">
+                    <div class="section-number">01</div>
+                    <h2>The Problem</h2>
+                </div>
+                <div class="section-content">
+                    <p>The rise of AI chatbots has introduced an unprecedented new category of psychological risk. People report compulsive usage, identity confusion, derealization, emotional dependency, and even psychotic breaks.</p>
+                    <p>Yet no institution is systematically tracking this emerging phenomenon, leaving researchers, clinicians, and policymakers without crucial data to understand and address these risks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples of Harm -->
+    <section class="section">
+        <div class="container">
+            <div class="section-grid">
+                <div class="section-header">
+                    <div class="section-number">02</div>
+                    <h2>Examples of Harm</h2>
+                </div>
+                <div class="section-content">
+                    <p>We're documenting a wide range of psychological impacts from AI interactions:</p>
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <div class="example-icon">🧠</div>
+                            <h3>Delusional Beliefs</h3>
+                            <p>Fixed false beliefs caused or reinforced by chatbot conversations</p>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-icon">👁️</div>
+                            <h3>Paranoia & Grandiosity</h3>
+                            <p>Persecution fears or inflated self-importance attributed to AI interactions</p>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-icon">💭</div>
+                            <h3>Obsessive Attachment</h3>
+                            <p>Compulsive emotional dependency on chatbot personalities</p>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-icon">👥</div>
+                            <h3>Social Withdrawal</h3>
+                            <p>Emotional detachment from friends, family, and real relationships</p>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-icon">✨</div>
+                            <h3>AI Deification</h3>
+                            <p>Viewing AI as divine, sentient, or all-knowing entities</p>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-icon">⚠️</div>
+                            <h3>Crisis Episodes</h3>
+                            <p>Acute moments where users felt psychologically unsafe or overwhelmed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="section">
+        <div class="container">
+            <div class="section-grid">
+                <div class="section-header">
+                    <div class="section-number">03</div>
+                    <h2>Our Mission</h2>
+                </div>
+                <div class="section-content">
+                    <p>This project exists to gather early data, raise awareness, and support ethical research, therapy, and policy responses to emerging AI-related mental health harms.</p>
+                    <p>By systematically documenting these experiences, we aim to provide the evidence base needed for informed decision-making about AI safety, therapeutic interventions, and regulatory frameworks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Section -->
+    <section class="section">
+        <div class="container">
+            <div class="privacy-section">
+                <div class="privacy-header">
+                    <h3>Privacy & Contribution Guidelines</h3>
+                    <p>Your privacy and safety are our highest priorities</p>
+                </div>
+                <div class="privacy-grid">
+                    <div class="privacy-column can-submit">
+                        <h4>You can submit</h4>
+                        <ul class="privacy-list">
+                            <li>Screenshots, voice notes, chat transcripts</li>
+                            <li>Written or video testimonials</li>
+                            <li>Experiences of yourself or someone else</li>
+                            <li>Anonymous or pseudonymous accounts</li>
+                        </ul>
+                    </div>
+                    <div class="privacy-column cannot-submit">
+                        <h4>Please do not submit</h4>
+                        <ul class="privacy-list">
+                            <li>Medical records or clinical documents</li>
+                            <li>Personally identifying information</li>
+                            <li>Contact details or real names</li>
+                            <li>Financial or sensitive personal data</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="privacy-note">
+                    All submissions are stored securely, anonymized, and used exclusively for research purposes. You have full control over whether you wish to be contacted for follow-up.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <div class="support-section">
+        <div class="container">
+            <div class="support-title">Supported by</div>
+            <div class="support-logos">
+                <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform
+
+" class="support-logo">Center for Humane Technology</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <section class="bottom-cta">
+        <div class="container">
+            <h2>Ready to share your experience?</h2>
+            <p>Help us build the first comprehensive database of AI psychological impacts</p>
+            <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform" class="cta-button cta-button-light">Submit Your Experience</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>AI Psychological Injury Data Center</h3>
+                    <p>Building the evidence base for understanding and addressing AI-related mental health risks through systematic data collection and ethical research practices.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Privacy Policy</a>
+                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Terms of Service</a>
+                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Data Usage Guidelines</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <a href="mailto:research@aipsychdata.org">research@aipsychdata.org</a>
+                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Media Inquiries</a>
+                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Partnership Opportunities</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                Copyright © 2025 AI Psychological Injury Data Center. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
