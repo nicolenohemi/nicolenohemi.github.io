@@ -1,713 +1,951 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Psychological Injury Data Center</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #1a1a1a;
-            background-color: #ffffff;
-            font-weight: 400;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Header */
-        header {
-            padding: 32px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 600;
-            color: #0a0a0a;
-            letter-spacing: -0.025em;
-        }
-
-        .logo-subtitle {
-            font-size: 14px;
-            color: #6b7280;
-            font-weight: 400;
-            margin-top: 2px;
-            letter-spacing: -0.01em;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 120px 0 140px;
-            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: clamp(36px, 5vw, 56px);
-            font-weight: 700;
-            color: #0a0a0a;
-            margin-bottom: 32px;
-            line-height: 1.1;
-            letter-spacing: -0.04em;
-        }
-
-        .hero-description {
-            font-size: 20px;
-            color: #4b5563;
-            margin-bottom: 48px;
-            line-height: 1.6;
-            font-weight: 400;
-            letter-spacing: -0.01em;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            padding: 16px 32px;
-            text-decoration: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.2);
-            letter-spacing: -0.01em;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px 0 rgba(59, 130, 246, 0.3);
-        }
-
-        .cta-button::after {
-            content: '→';
-            transition: transform 0.3s ease;
-        }
-
-        .cta-button:hover::after {
-            transform: translateX(4px);
-        }
-
-        /* Content Sections */
-        .section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 80px;
-            align-items: start;
-        }
-
-        .section-header {
-            position: sticky;
-            top: 120px;
-        }
-
-        .section-number {
-            font-size: 14px;
-            color: #3b82f6;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-        }
-
-        .section h2 {
-            font-size: 32px;
-            font-weight: 600;
-            color: #0a0a0a;
-            margin-bottom: 24px;
-            line-height: 1.2;
-            letter-spacing: -0.025em;
-        }
-
-        .section-content p {
-            font-size: 18px;
-            color: #374151;
-            margin-bottom: 24px;
-            line-height: 1.7;
-            letter-spacing: -0.01em;
-        }
-
-        /* Alternate section styling */
-        .section:nth-child(even) {
-            background: #fafafa;
-        }
-
-        /* Examples List */
-        .examples-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-
-        .example-card {
-            background: white;
-            padding: 32px;
-            border-radius: 16px;
-            border: 1px solid rgba(0,0,0,0.06);
-            transition: all 0.3s ease;
-        }
-
-        .example-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border-color: rgba(59, 130, 246, 0.2);
-        }
-
-        .example-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-
-        .example-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #0a0a0a;
-            margin-bottom: 8px;
-            letter-spacing: -0.01em;
-        }
-
-        .example-card p {
-            font-size: 14px;
-            color: #6b7280;
-            line-height: 1.6;
-        }
-
-        /* Privacy Section */
-        .privacy-section {
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-            border: 1px solid rgba(0,0,0,0.06);
-            border-radius: 24px;
-            padding: 64px;
-            margin: 64px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .privacy-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(50%, -50%);
-        }
-
-        .privacy-header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-
-        .privacy-header h3 {
-            font-size: 28px;
-            font-weight: 600;
-            color: #0a0a0a;
-            margin-bottom: 16px;
-            letter-spacing: -0.025em;
-        }
-
-        .privacy-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 32px;
-        }
-
-        .privacy-column h4 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #0a0a0a;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: -0.01em;
-        }
-
-        .privacy-column.can-submit h4::before {
-            content: '✓';
-            color: #22c55e;
-            font-size: 20px;
-        }
-
-        .privacy-column.cannot-submit h4::before {
-            content: '✗';
-            color: #ef4444;
-            font-size: 20px;
-        }
-
-        .privacy-list {
-            list-style: none;
-            space-y: 12px;
-        }
-
-        .privacy-list li {
-            padding: 16px 0;
-            font-size: 16px;
-            color: #374151;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            transition: color 0.2s ease;
-        }
-
-        .privacy-list li:last-child {
-            border-bottom: none;
-        }
-
-        .privacy-note {
-            background: rgba(59, 130, 246, 0.05);
-            border: 1px solid rgba(59, 130, 246, 0.1);
-            border-radius: 12px;
-            padding: 24px;
-            font-size: 15px;
-            color: #1e40af;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        /* Support Section */
-        .support-section {
-            text-align: center;
-            padding: 80px 0;
-            background: #fafafa;
-        }
-
-        .support-title {
-            font-size: 16px;
-            color: #6b7280;
-            margin-bottom: 32px;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-        }
-
-        .support-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
-
-        .support-logo {
-            display: flex;
-            align-items: center;
-            padding: 16px 24px;
-            background: white;
-            border: 1px solid rgba(0,0,0,0.08);
-            border-radius: 12px;
-            color: #374151;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .support-logo:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-
-        /* Bottom CTA */
-        .bottom-cta {
-            text-align: center;
-            padding: 120px 0;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bottom-cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
-        }
-
-        .bottom-cta h2 {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            position: relative;
-            letter-spacing: -0.025em;
-        }
-
-        .bottom-cta p {
-            font-size: 18px;
-            color: #cbd5e1;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .cta-button-light {
-            background: white;
-            color: #0f172a;
-            box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .cta-button-light:hover {
-            background: #f8fafc;
-            box-shadow: 0 8px 25px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: #0a0a0a;
-            color: white;
-            padding: 64px 0 32px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 64px;
-            margin-bottom: 48px;
-        }
-
-        .footer-brand h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            letter-spacing: -0.01em;
-        }
-
-        .footer-brand p {
-            color: #9ca3af;
-            line-height: 1.7;
-        }
-
-        .footer-links h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            letter-spacing: -0.01em;
-        }
-
-        .footer-links a {
-            display: block;
-            color: #9ca3af;
-            text-decoration: none;
-            margin-bottom: 12px;
-            font-size: 15px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            padding-top: 32px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 1024px) {
-            .section-grid {
-                grid-template-columns: 1fr;
-                gap: 48px;
-            }
-
-            .section-header {
-                position: static;
-            }
-
-            .privacy-section {
-                padding: 48px 32px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            .hero {
-                padding: 80px 0 100px;
-            }
-
-            .section {
-                padding: 60px 0;
-            }
-
-            .privacy-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .examples-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .support-logos {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .bottom-cta {
-                padding: 80px 0;
-            }
-
-            .privacy-section {
-                padding: 32px 24px;
-                margin: 32px 0;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Human Movement – Make AI Safe Together</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0c0c10;
+      --surface: #16161e;
+      --surface2: #1e1e28;
+      --border: rgba(255,255,255,0.07);
+      --text: #f0ede8;
+      --muted: #9896a0;
+      --danger: #ef4444;
+      --danger2: #f97316;
+      --safe: #22c55e;
+      --safe2: #3b82f6;
+      --accent: #f59e0b;
+      --accent-hover: #fcd34d;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── HERO ────────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 64px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 65% 35%, rgba(239,68,68,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 75%, rgba(34,197,94,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      border: 1px solid rgba(245,158,11,0.3);
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+    .hero-headline {
+      font-size: clamp(28px, 3.2vw, 46px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 1.4vw, 17px);
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    /* Desktop form */
+    .desktop-form {}
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .field input:focus { border-color: var(--accent); }
+    .field input::placeholder { color: rgba(152,150,160,0.4); }
+    .field input.error { border-color: var(--danger); }
+
+    .field-error {
+      font-size: 12px;
+      color: var(--danger);
+      margin-top: 4px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--accent);
+      color: #0c0c10;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 24px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 10px;
+      font-family: inherit;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* Success box */
+    .success-box {
+      display: none;
+      margin-top: 20px;
+      padding: 20px 22px;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.22);
+      border-radius: 12px;
+    }
+    .success-box.show { display: block; }
+    .success-box h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--safe);
+      margin-bottom: 6px;
+    }
+    .success-box p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── MOBILE CTA ───────────────────────────────────────────────── */
+    .mobile-cta { display: none; }
+
+    .sms-btn {
+      display: block;
+      width: 100%;
+      background: var(--accent);
+      color: #0c0c10;
+      border: none;
+      border-radius: 14px;
+      padding: 18px 24px;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: background 0.2s, transform 0.15s;
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sms-btn:hover, .sms-btn:active { background: var(--accent-hover); }
+
+    .mobile-email-wrap {
+      margin-top: 24px;
+    }
+    .mobile-email-hint {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .mobile-email-row {
+      display: flex;
+      gap: 8px;
+    }
+    .mobile-email-row input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 14px;
+      color: var(--text);
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .mobile-email-row input:focus { border-color: var(--accent); }
+    .mobile-email-row input::placeholder { color: rgba(152,150,160,0.4); }
+    .mobile-email-row .btn-sm {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.2s, color 0.2s;
+      font-family: inherit;
+    }
+    .mobile-email-row .btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── WHEEL VISUAL ─────────────────────────────────────────────── */
+    .wheel-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .scene-wrap {
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+    }
+
+    .scene-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* SVG animation states */
+
+    /* Wheel rotation */
+    @keyframes spinWheel {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(-200deg); }
+    }
+    #wheelGroup {
+      transform-origin: 210px 185px;
+      transform-box: fill-box;
+    }
+    #wheelGroup.turning {
+      animation: spinWheel 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Extra hands / figures */
+    .extra-element {
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .joined .extra-element { opacity: 1; }
+
+    /* Stagger extra elements */
+    .joined .extra-element:nth-child(1) { transition-delay: 0.1s; }
+    .joined .extra-element:nth-child(2) { transition-delay: 0.25s; }
+    .joined .extra-element:nth-child(3) { transition-delay: 0.4s; }
+    .joined .extra-element:nth-child(4) { transition-delay: 0.55s; }
+    .joined .extra-element:nth-child(5) { transition-delay: 0.7s; }
+
+    /* Path states */
+    .road-danger { transition: opacity 0.7s ease 0.3s; }
+    .road-safe   { opacity: 0; transition: opacity 0.9s ease 0.5s; }
+    .zone-danger { transition: opacity 0.5s ease 0.2s; }
+    .zone-safe   { opacity: 0; transition: opacity 0.9s ease 0.8s; }
+
+    .joined .road-danger { opacity: 0; }
+    .joined .road-safe   { opacity: 1; }
+    .joined .zone-danger { opacity: 0; }
+    .joined .zone-safe   { opacity: 1; }
+
+    /* Danger pulse */
+    @keyframes dangerPulse {
+      0%, 100% { opacity: 0.9; }
+      50%       { opacity: 0.35; }
+    }
+    .danger-pulse { animation: dangerPulse 2.2s ease-in-out infinite; }
+    .joined .danger-pulse { animation: none; }
+
+    /* Safe zone glow */
+    @keyframes safeGlow {
+      0%, 100% { opacity: 0.7; }
+      50%       { opacity: 1; }
+    }
+    .joined .safe-glow { animation: safeGlow 2s ease-in-out infinite; }
+
+    .wheel-caption {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      height: 20px;
+      transition: color 0.5s;
+    }
+    .wheel-caption.joined-state { color: var(--safe); font-weight: 700; }
+
+    /* ── SECTIONS BELOW HERO ──────────────────────────────────────── */
+    .below-hero {
+      border-top: 1px solid var(--border);
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section + .section {
+      border-top: 1px solid var(--border);
+    }
+
+    .section-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(22px, 2.4vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: 28px;
+      color: var(--text);
+    }
+
+    .two-up {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .dot-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .dot-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .dot-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    .dot-list.blue li::before { background: var(--safe2); }
+
+    .privacy-note {
+      margin-top: 48px;
+      padding: 20px 22px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-brand {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero {
+        min-height: auto;
+        padding: 48px 0 40px;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .hero-text { order: 1; }
+      .wheel-panel { order: 2; }
+
+      .desktop-form { display: none; }
+      .mobile-cta   { display: block; }
+
+      .two-up {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .section { padding: 52px 0; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+
+      .scene-wrap { max-width: 340px; }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-cta { display: none !important; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div>
-                    <div class="logo">AI Psychological Injury Data Center</div>
-                    <div class="logo-subtitle">Tracking the mental health effects of AI systems</div>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Have you or someone you know been psychologically harmed by AI?</h1>
-                <p class="hero-description">Share your story to help us understand the real-world mental health impact of conversational AI like ChatGPT, Replika, and Character.AI.</p>
-                <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform" class="cta-button">Submit Your Experience</a>
-            </div>
-        </div>
-    </section>
+<!-- ════════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
 
-    <!-- Problem Statement -->
-    <section class="section">
-        <div class="container">
-            <div class="section-grid">
-                <div class="section-header">
-                    <div class="section-number">01</div>
-                    <h2>The Problem</h2>
-                </div>
-                <div class="section-content">
-                    <p>The rise of AI chatbots has introduced an unprecedented new category of psychological risk. People report compulsive usage, identity confusion, derealization, emotional dependency, and even psychotic breaks.</p>
-                    <p>Yet no institution is systematically tracking this emerging phenomenon, leaving researchers, clinicians, and policymakers without crucial data to understand and address these risks.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <!-- ── LEFT: Text + action ── -->
+      <div class="hero-text">
+        <div class="hero-label">The Human Movement</div>
 
-    <!-- Examples of Harm -->
-    <section class="section">
-        <div class="container">
-            <div class="section-grid">
-                <div class="section-header">
-                    <div class="section-number">02</div>
-                    <h2>Examples of Harm</h2>
-                </div>
-                <div class="section-content">
-                    <p>We're documenting a wide range of psychological impacts from AI interactions:</p>
-                    <div class="examples-grid">
-                        <div class="example-card">
-                            <div class="example-icon">🧠</div>
-                            <h3>Delusional Beliefs</h3>
-                            <p>Fixed false beliefs caused or reinforced by chatbot conversations</p>
-                        </div>
-                        <div class="example-card">
-                            <div class="example-icon">👁️</div>
-                            <h3>Paranoia & Grandiosity</h3>
-                            <p>Persecution fears or inflated self-importance attributed to AI interactions</p>
-                        </div>
-                        <div class="example-card">
-                            <div class="example-icon">💭</div>
-                            <h3>Obsessive Attachment</h3>
-                            <p>Compulsive emotional dependency on chatbot personalities</p>
-                        </div>
-                        <div class="example-card">
-                            <div class="example-icon">👥</div>
-                            <h3>Social Withdrawal</h3>
-                            <p>Emotional detachment from friends, family, and real relationships</p>
-                        </div>
-                        <div class="example-card">
-                            <div class="example-icon">✨</div>
-                            <h3>AI Deification</h3>
-                            <p>Viewing AI as divine, sentient, or all-knowing entities</p>
-                        </div>
-                        <div class="example-card">
-                            <div class="example-icon">⚠️</div>
-                            <h3>Crisis Episodes</h3>
-                            <p>Acute moments where users felt psychologically unsafe or overwhelmed</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <h1 class="hero-headline">
+          Everyone has a role in making AI safe.<br>Find yours.
+        </h1>
 
-    <!-- Mission -->
-    <section class="section">
-        <div class="container">
-            <div class="section-grid">
-                <div class="section-header">
-                    <div class="section-number">03</div>
-                    <h2>Our Mission</h2>
-                </div>
-                <div class="section-content">
-                    <p>This project exists to gather early data, raise awareness, and support ethical research, therapy, and policy responses to emerging AI-related mental health harms.</p>
-                    <p>By systematically documenting these experiences, we aim to provide the evidence base needed for informed decision-making about AI safety, therapeutic interventions, and regulatory frameworks.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        <p class="hero-sub">
+          We're all on the same plane, headed toward a cliff. The only way to steer away is together — millions of us taking the wheel in our communities, classrooms, dinner tables, and group chats.
+        </p>
 
-    <!-- Privacy Section -->
-    <section class="section">
-        <div class="container">
-            <div class="privacy-section">
-                <div class="privacy-header">
-                    <h3>Privacy & Contribution Guidelines</h3>
-                    <p>Your privacy and safety are our highest priorities</p>
-                </div>
-                <div class="privacy-grid">
-                    <div class="privacy-column can-submit">
-                        <h4>You can submit</h4>
-                        <ul class="privacy-list">
-                            <li>Screenshots, voice notes, chat transcripts</li>
-                            <li>Written or video testimonials</li>
-                            <li>Experiences of yourself or someone else</li>
-                            <li>Anonymous or pseudonymous accounts</li>
-                        </ul>
-                    </div>
-                    <div class="privacy-column cannot-submit">
-                        <h4>Please do not submit</h4>
-                        <ul class="privacy-list">
-                            <li>Medical records or clinical documents</li>
-                            <li>Personally identifying information</li>
-                            <li>Contact details or real names</li>
-                            <li>Financial or sensitive personal data</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="privacy-note">
-                    All submissions are stored securely, anonymized, and used exclusively for research purposes. You have full control over whether you wish to be contacted for follow-up.
-                </div>
-            </div>
+        <!-- ── DESKTOP FORM ── -->
+        <div class="desktop-form" id="desktopForm">
+          <div class="field">
+            <label for="d-email">Email <span style="color:var(--danger)">*</span></label>
+            <input type="email" id="d-email" placeholder="you@example.com" autocomplete="email">
+            <div class="field-error" id="d-email-err">Please enter a valid email address.</div>
+          </div>
+          <div class="field">
+            <label for="d-phone">
+              Phone
+              <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px">(optional)</span>
+            </label>
+            <input type="tel" id="d-phone" placeholder="+1 (555) 000-0000" autocomplete="tel">
+          </div>
+          <button class="btn-primary" id="d-submit" onclick="handleDesktopSubmit()">
+            Take the wheel
+          </button>
+          <div class="success-box" id="d-success">
+            <h4>You've joined the movement.</h4>
+            <p>Watch for a short message soon with a few concrete ways to help. No flood of emails — just a clear next step.</p>
+          </div>
         </div>
-    </section>
 
-    <!-- Support Section -->
-    <div class="support-section">
-        <div class="container">
-            <div class="support-title">Supported by</div>
-            <div class="support-logos">
-                <a href="https://www.humanetech.com/" target="_blank" class="support-logo">Center for Humane Technology</a>
+        <!-- ── MOBILE CTA ── -->
+        <div class="mobile-cta" id="mobileCta">
+          <!--
+            CHANGE SMS NUMBER:
+            Replace +15550000000 below with your real phone number.
+            The ?body= pre-fills the SMS message text.
+          -->
+          <a
+            href="sms:+15550000000?body=I%20want%20to%20join%20the%20human%20movement%20and%20help%20make%20AI%20safe."
+            class="sms-btn"
+            id="mobileSmsBtn"
+            onclick="handleMobileTap()"
+          >
+            Take the wheel – text to join
+          </a>
+
+          <div class="mobile-email-wrap">
+            <p class="mobile-email-hint">Add your email too? (optional, but helpful)</p>
+            <div class="mobile-email-row">
+              <input type="email" id="m-email" placeholder="your@email.com" autocomplete="email">
+              <button class="btn-sm" onclick="handleMobileEmail()">Join</button>
             </div>
+          </div>
+
+          <div class="success-box" id="m-success">
+            <h4>You've joined the movement.</h4>
+            <p>Your text is on its way. We'll be in touch with real ways to help.</p>
+          </div>
         </div>
+      </div><!-- /hero-text -->
+
+      <!-- ── RIGHT: Steering wheel visual ── -->
+      <div class="wheel-panel">
+        <div class="scene-wrap">
+
+          <!--
+            SVG SCENE — Steering wheel with hands + road metaphor
+            Center of wheel: (210, 185)   Rim radius: 86
+          -->
+          <svg
+            id="sceneSvg"
+            class="scene-svg"
+            viewBox="0 0 420 390"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-label="Steering wheel animation showing people taking control together"
+          >
+            <defs>
+              <radialGradient id="bg" cx="50%" cy="45%" r="55%">
+                <stop offset="0%" stop-color="#18182a"/>
+                <stop offset="100%" stop-color="#0c0c10"/>
+              </radialGradient>
+              <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4"/>
+              </filter>
+              <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="6" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <!-- Background -->
+            <rect width="420" height="390" rx="18" fill="url(#bg)"/>
+
+            <!-- ── ROAD SCENE (bottom third) ── -->
+
+            <!-- Danger road (before) -->
+            <g class="road-danger">
+              <!-- Road surface -->
+              <path d="M210 265 L110 385 L310 385 Z" fill="#1c1c2e" opacity="0.7"/>
+              <path d="M210 265 L178 385 L242 385 Z" fill="#222235" opacity="0.9"/>
+              <!-- Center dashes -->
+              <line x1="210" y1="275" x2="198" y2="320" stroke="rgba(255,255,255,0.12)" stroke-width="2" stroke-dasharray="7 7"/>
+              <!-- Direction arrow toward danger -->
+              <path d="M210 295 L198 325 M210 295 L222 325" stroke="rgba(239,68,68,0.5)" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Safe road (after) -->
+            <g class="road-safe">
+              <path d="M210 265 L60 360 L200 390 Z" fill="#0e1e14" opacity="0.7"/>
+              <path d="M210 265 L90 355 L185 390 Z" fill="#102018" opacity="0.9"/>
+              <!-- Direction arrow toward safe -->
+              <path d="M200 295 L175 325 M200 295 L208 330" stroke="rgba(34,197,94,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Danger zone (red cliff) -->
+            <g class="zone-danger danger-pulse">
+              <ellipse cx="295" cy="372" rx="56" ry="14" fill="rgba(239,68,68,0.18)" filter="url(#soft)"/>
+              <rect x="265" y="362" width="60" height="22" rx="5" fill="rgba(239,68,68,0.22)"/>
+              <text x="295" y="376" text-anchor="middle" fill="#ef4444" font-size="9.5" font-weight="800" font-family="system-ui,sans-serif" letter-spacing="0.08em">DANGER</text>
+            </g>
+
+            <!-- Safe zone (green) -->
+            <g class="zone-safe safe-glow">
+              <ellipse cx="128" cy="373" rx="52" ry="13" fill="rgba(34,197,94,0.18)" filter="url(#soft)"/>
+              <rect x="98" y="363" width="60" height="22" rx="5" fill="rgba(34,197,94,0.22)"/>
+              <text x="128" y="377" text-anchor="middle" fill="#22c55e" font-size="9.5" font-weight="800" font-family="system-ui,sans-serif" letter-spacing="0.08em">SAFE PATH</text>
+            </g>
+
+            <!-- ── STEERING WHEEL ── -->
+            <!-- Subtle glow behind wheel -->
+            <circle cx="210" cy="185" r="100" fill="rgba(100,100,160,0.06)" filter="url(#soft)"/>
+
+            <g id="wheelGroup">
+              <!-- Outer rim shadow -->
+              <circle cx="210" cy="185" r="87" stroke="rgba(0,0,0,0.5)" stroke-width="14" fill="none"/>
+              <!-- Outer rim -->
+              <circle cx="210" cy="185" r="86" stroke="#3e3e5a" stroke-width="10" fill="none"/>
+              <!-- Rim highlight -->
+              <circle cx="210" cy="185" r="86" stroke="rgba(255,255,255,0.07)" stroke-width="2" fill="none"/>
+
+              <!-- Spokes (4 — vertical + horizontal) -->
+              <!-- Top spoke -->
+              <line x1="210" y1="104" x2="210" y2="152" stroke="#3e3e5a" stroke-width="7" stroke-linecap="round"/>
+              <!-- Bottom spoke -->
+              <line x1="210" y1="218" x2="210" y2="266" stroke="#3e3e5a" stroke-width="7" stroke-linecap="round"/>
+              <!-- Left spoke -->
+              <line x1="129" y1="185" x2="172" y2="185" stroke="#3e3e5a" stroke-width="7" stroke-linecap="round"/>
+              <!-- Right spoke -->
+              <line x1="248" y1="185" x2="291" y2="185" stroke="#3e3e5a" stroke-width="7" stroke-linecap="round"/>
+
+              <!-- Hub -->
+              <circle cx="210" cy="185" r="24" fill="#1e1e2e" stroke="#3e3e5a" stroke-width="3"/>
+              <circle cx="210" cy="185" r="10" fill="#3e3e5a"/>
+            </g>
+
+            <!-- ── INITIAL HANDS ON RIM (2 grips — always visible) ── -->
+            <!--
+              Rim positions (cx=210, cy=185, r=86):
+              10:30 (315°): x=210+86*sin(315°)=210-60.8=149, y=185-86*cos(315°)=185-60.8=124
+              4:30  (135°): x=210+86*sin(135°)=210+60.8=271, y=185-86*cos(135°)=185+60.8=246
+            -->
+            <g id="initHands">
+              <!-- Grip 1 — 10:30 (top-left of rim) -->
+              <g transform="translate(149,124) rotate(-45)">
+                <ellipse cx="0" cy="0" rx="13" ry="9" fill="#c4956a"/>
+                <rect x="-6" y="-18" width="4.5" height="11" rx="2.25" fill="#c4956a" transform="rotate(-8)"/>
+                <rect x="-1" y="-19" width="4.5" height="13" rx="2.25" fill="#c4956a"/>
+                <rect x="4"  y="-18" width="4.5" height="12" rx="2.25" fill="#c4956a" transform="rotate(8)"/>
+                <rect x="8"  y="-15" width="4"   height="10" rx="2"    fill="#c4956a" transform="rotate(16)"/>
+              </g>
+
+              <!-- Grip 2 — 4:30 (bottom-right of rim) -->
+              <g transform="translate(271,246) rotate(135)">
+                <ellipse cx="0" cy="0" rx="13" ry="9" fill="#a07040"/>
+                <rect x="-6" y="-18" width="4.5" height="11" rx="2.25" fill="#a07040" transform="rotate(-8)"/>
+                <rect x="-1" y="-19" width="4.5" height="13" rx="2.25" fill="#a07040"/>
+                <rect x="4"  y="-18" width="4.5" height="12" rx="2.25" fill="#a07040" transform="rotate(8)"/>
+                <rect x="8"  y="-15" width="4"   height="10" rx="2"    fill="#a07040" transform="rotate(16)"/>
+              </g>
+            </g>
+
+            <!-- ── EXTRA HANDS (appear on join) ── -->
+            <!--
+              1:30 (45°):  x=210+60.8=271, y=185-60.8=124
+              7:30 (225°): x=210-60.8=149, y=185+60.8=246
+              3:00 (90°):  x=210+86=296,   y=185
+              9:00 (270°): x=210-86=124,   y=185
+            -->
+            <g id="extraHands">
+              <!-- Grip 3 — 1:30 -->
+              <g class="extra-element" transform="translate(271,124) rotate(45)">
+                <ellipse cx="0" cy="0" rx="13" ry="9" fill="#7a5040"/>
+                <rect x="-6" y="-18" width="4.5" height="11" rx="2.25" fill="#7a5040" transform="rotate(-8)"/>
+                <rect x="-1" y="-19" width="4.5" height="13" rx="2.25" fill="#7a5040"/>
+                <rect x="4"  y="-18" width="4.5" height="12" rx="2.25" fill="#7a5040" transform="rotate(8)"/>
+              </g>
+
+              <!-- Grip 4 — 7:30 -->
+              <g class="extra-element" transform="translate(149,246) rotate(-135)">
+                <ellipse cx="0" cy="0" rx="13" ry="9" fill="#d4a574"/>
+                <rect x="-6" y="-18" width="4.5" height="11" rx="2.25" fill="#d4a574" transform="rotate(-8)"/>
+                <rect x="-1" y="-19" width="4.5" height="13" rx="2.25" fill="#d4a574"/>
+                <rect x="4"  y="-18" width="4.5" height="12" rx="2.25" fill="#d4a574" transform="rotate(8)"/>
+              </g>
+
+              <!-- Grip 5 — 3:00 (right) -->
+              <g class="extra-element" transform="translate(296,185) rotate(90)">
+                <ellipse cx="0" cy="0" rx="13" ry="9" fill="#9a7050"/>
+                <rect x="-6" y="-18" width="4.5" height="11" rx="2.25" fill="#9a7050" transform="rotate(-8)"/>
+                <rect x="-1" y="-19" width="4.5" height="13" rx="2.25" fill="#9a7050"/>
+                <rect x="4"  y="-18" width="4.5" height="12" rx="2.25" fill="#9a7050" transform="rotate(8)"/>
+              </g>
+            </g>
+
+            <!-- ── PERSON SILHOUETTES AROUND THE WHEEL ── -->
+            <!--
+              Silhouettes at radius ~140 from center (210,185).
+              Initial 2, extras 4 more.
+              Simple: circle (head) + rect (body)
+            -->
+
+            <!-- Initial figures (always visible) -->
+            <g id="initFigures" opacity="0.55">
+              <!-- Figure at ~11 o'clock (radius 138) -->
+              <!-- 330°: x=210+138*sin(330°)=210-69=141, y=185-138*cos(330°)=185-120=65 -->
+              <circle cx="141" cy="60"  r="7"  fill="#6a6a9e"/>
+              <path d="M133 73 Q141 69 149 73 L150 89 Q141 93 132 89 Z" fill="#6a6a9e"/>
+
+              <!-- Figure at ~5 o'clock -->
+              <!-- 150°: x=210+138*sin(150°)=210+69=279, y=185-138*cos(150°)=185+120=305 -->
+              <circle cx="279" cy="300" r="7"  fill="#6a6a9e"/>
+              <path d="M271 313 Q279 309 287 313 L288 329 Q279 333 270 329 Z" fill="#6a6a9e"/>
+            </g>
+
+            <!-- Extra figures (appear on join) -->
+            <g id="extraFigures">
+              <!-- ~1 o'clock (30°): x=210+138*sin(30°)=279, y=185-138*cos(30°)=185-120=65 -->
+              <g class="extra-element">
+                <circle cx="279" cy="60"  r="6"  fill="#22c55e" opacity="0.75"/>
+                <path d="M272 73 Q279 69 286 73 L287 87 Q279 91 271 87 Z" fill="#22c55e" opacity="0.75"/>
+              </g>
+
+              <!-- ~7 o'clock (210°): x=210+138*sin(210°)=141, y=185-138*cos(210°)=305 -->
+              <g class="extra-element">
+                <circle cx="141" cy="300" r="6"  fill="#22c55e" opacity="0.75"/>
+                <path d="M134 313 Q141 309 148 313 L149 327 Q141 331 133 327 Z" fill="#22c55e" opacity="0.75"/>
+              </g>
+
+              <!-- ~3 o'clock (90°): x=210+138=348, y=185 -->
+              <g class="extra-element">
+                <circle cx="352" cy="185" r="6"  fill="#3b82f6" opacity="0.7"/>
+                <path d="M345 198 Q352 194 359 198 L360 212 Q352 216 344 212 Z" fill="#3b82f6" opacity="0.7"/>
+              </g>
+
+              <!-- ~9 o'clock (270°): x=210-138=72, y=185 -->
+              <g class="extra-element">
+                <circle cx="68"  cy="185" r="6"  fill="#3b82f6" opacity="0.7"/>
+                <path d="M61 198 Q68 194 75 198 L76 212 Q68 216 60 212 Z" fill="#3b82f6" opacity="0.7"/>
+              </g>
+            </g>
+
+            <!-- "You joined" label (appears after action) -->
+            <g id="joinedLabel" style="opacity:0; transition: opacity 0.6s ease 1s;">
+              <rect x="140" y="46" width="140" height="26" rx="13" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+              <text x="210" y="63" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700" font-family="system-ui,sans-serif">You joined. Steering together.</text>
+            </g>
+
+          </svg><!-- /scene-svg -->
+        </div><!-- /scene-wrap -->
+
+        <div class="wheel-caption" id="wheelCaption">
+          Barely holding the wheel. The cliff approaches.
+        </div>
+      </div><!-- /wheel-panel -->
+
+    </div><!-- /hero-inner -->
+  </div>
+</section><!-- /hero -->
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     BELOW HERO SECTIONS
+════════════════════════════════════════════════════════════════ -->
+<div class="below-hero">
+  <div class="container">
+
+    <!-- From watching to steering + Tech reassurance -->
+    <div class="section two-up">
+      <div>
+        <div class="section-tag">What's next</div>
+        <h2 class="section-title">From watching<br>to steering</h2>
+        <ul class="dot-list">
+          <li>Get a few clear, concrete ways to help make AI safe.</li>
+          <li>Be invited into small, trusted conversations — dinners, local groups, online circles.</li>
+          <li>Move from a single click to real, shared action.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-tag">About the technology</div>
+        <h2 class="section-title" style="font-size:clamp(20px,2vw,26px)">We use AI thoughtfully,<br>not recklessly</h2>
+        <ul class="dot-list blue">
+          <li>Guidance comes from human-designed scripts, reviewed for safety.</li>
+          <li>We use AI as a guide rail, not to generate new content about you.</li>
+          <li>We want thoughtful action, not endless notifications.</li>
+        </ul>
+      </div>
     </div>
 
-    <!-- Bottom CTA -->
-    <section class="bottom-cta">
-        <div class="container">
-            <h2>Ready to share your experience?</h2>
-            <p>Help us build the first comprehensive database of AI psychological impacts</p>
-            <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform" class="cta-button cta-button-light">Submit Your Experience</a>
-        </div>
-    </section>
+    <!-- Privacy -->
+    <div class="section">
+      <div class="section-tag">Privacy</div>
+      <p style="font-size:16px; color:var(--muted); max-width:620px; line-height:1.75;">
+        We only ask for what we need to stay in touch and coordinate action. No ads, no selling your data.
+      </p>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>AI Psychological Injury Data Center</h3>
-                    <p>Building the evidence base for understanding and addressing AI-related mental health risks through systematic data collection and ethical research practices.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Legal</h4>
-                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Privacy Policy</a>
-                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Terms of Service</a>
-                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Data Usage Guidelines</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Contact</h4>
-                    <a href="mailto:research@aipsychdata.org">research@aipsychdata.org</a>
-                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Media Inquiries</a>
-                    <a href="https://docs.google.com/forms/d/1z8iAn4x6-1ezp7zGHwQHEA_h_M_JEIyimRqPuBarzp0/viewform">Partnership Opportunities</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                Copyright © 2025 AI Psychological Injury Data Center. All rights reserved.
-            </div>
-        </div>
-    </footer>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-brand">The Human Movement</span>
+      <span class="footer-copy">Making AI safe — together.</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // ── Mobile detection ────────────────────────────────────────────────────────
+  // Rough check based on screen width and touch capability
+  const isMobile = window.matchMedia('(max-width: 768px)').matches
+    || ('ontouchstart' in window && window.innerWidth < 900);
+
+  // ── Shared: trigger the "wheel turns, path steers to safety" animation ──────
+  function triggerJoinAnimation() {
+    const svg      = document.getElementById('sceneSvg');
+    const wheel    = document.getElementById('wheelGroup');
+    const label    = document.getElementById('joinedLabel');
+    const caption  = document.getElementById('wheelCaption');
+
+    // Add joined class to SVG → CSS handles extra hands, road swap, zones
+    svg.classList.add('joined');
+
+    // Spin the wheel
+    wheel.classList.add('turning');
+
+    // Reveal the "you joined" label inside the SVG
+    setTimeout(function() {
+      label.style.opacity = '1';
+    }, 900);
+
+    // Update caption below SVG
+    setTimeout(function() {
+      caption.textContent = 'More hands on the wheel. Steering together now.';
+      caption.classList.add('joined-state');
+    }, 600);
+  }
+
+  // ── Desktop form ────────────────────────────────────────────────────────────
+  function handleDesktopSubmit() {
+    var emailInput  = document.getElementById('d-email');
+    var emailErr    = document.getElementById('d-email-err');
+    var successBox  = document.getElementById('d-success');
+    var submitBtn   = document.getElementById('d-submit');
+
+    var emailVal   = emailInput.value.trim();
+    var emailOk    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+
+    // Reset previous errors
+    emailInput.classList.remove('error');
+    emailErr.classList.remove('show');
+
+    if (!emailVal || !emailOk) {
+      emailInput.classList.add('error');
+      emailErr.classList.add('show');
+      emailInput.focus();
+      return;
+    }
+
+    // Disable inputs
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Joining…';
+    emailInput.disabled = true;
+    document.getElementById('d-phone').disabled = true;
+
+    // ── TODO: Replace with real backend call ────────────────────────────────
+    // Example:
+    // fetch('/api/join', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     email: emailVal,
+    //     phone: document.getElementById('d-phone').value.trim()
+    //   })
+    // }).then(function(r) { if (!r.ok) throw new Error(); });
+    // ────────────────────────────────────────────────────────────────────────
+
+    // Simulate success (front-end only for now)
+    setTimeout(function() {
+      submitBtn.style.display = 'none';
+      successBox.classList.add('show');
+      triggerJoinAnimation();
+    }, 450);
+  }
+
+  // ── Mobile SMS tap ──────────────────────────────────────────────────────────
+  function handleMobileTap() {
+    // Trigger animation immediately — user is opening their SMS app
+    setTimeout(function() {
+      triggerJoinAnimation();
+      document.getElementById('m-success').classList.add('show');
+    }, 350);
+  }
+
+  // ── Mobile email submit ─────────────────────────────────────────────────────
+  function handleMobileEmail() {
+    var input = document.getElementById('m-email');
+    var val   = input.value.trim();
+    var ok    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+
+    if (!ok) {
+      input.style.borderColor = 'var(--danger)';
+      input.focus();
+      return;
+    }
+
+    // ── TODO: Replace with real backend call ────────────────────────────────
+    // fetch('/api/join', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ email: val })
+    // });
+    // ────────────────────────────────────────────────────────────────────────
+
+    input.style.borderColor = 'var(--safe)';
+    input.disabled = true;
+
+    var btn = input.parentElement.querySelector('.btn-sm');
+    btn.textContent = 'Done ✓';
+    btn.disabled = true;
+
+    // Only trigger animation if it hasn't already fired from the SMS tap
+    if (!document.getElementById('sceneSvg').classList.contains('joined')) {
+      triggerJoinAnimation();
+    }
+  }
+
+  // ── Allow Enter key to submit desktop form ──────────────────────────────────
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      var a = document.activeElement;
+      if (a && (a.id === 'd-email' || a.id === 'd-phone')) {
+        handleDesktopSubmit();
+      }
+      if (a && a.id === 'm-email') {
+        handleMobileEmail();
+      }
+    }
+  });
+</script>
+
 </body>
 </html>
