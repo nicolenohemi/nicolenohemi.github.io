@@ -864,9 +864,9 @@
     emailInput.disabled = true;
 
     // ── Formspree: go to https://formspree.io, create a free form,
-    //    then replace YOUR_FORM_ID below with the ID they give you.
+    //    then replace mjgawonk below with the ID they give you.
     //    Submissions appear in your Formspree dashboard → export as CSV/Excel.
-    fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    fetch('https://formspree.io/f/mjgawonk', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ email: emailVal })
@@ -898,8 +898,8 @@
       return;
     }
 
-    // Same Formspree endpoint — replace YOUR_FORM_ID to match the desktop form above
-    fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    // Same Formspree endpoint — replace mjgawonk to match the desktop form above
+    fetch('https://formspree.io/f/mjgawonk', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ email: val })
