@@ -875,100 +875,91 @@
         </div>
     </section>
 
-    <!-- AI Safety Action Banner -->
-    <section class="action-banner">
-        <div class="container">
-            <div class="action-banner-label">Take Action</div>
-            <h2>Everyone has a role in making AI safe.</h2>
-            <a href="sms:+15055036413" class="action-banner-btn">Find yours here</a>
-            <p class="action-banner-note">Opens your SMS app &mdash; call your rep with our script, make your voice heard.</p>
-        </div>
-    </section>
+    <!-- AI Safety Action Banner + Sections (rendered from data table below) -->
+    <section class="action-banner" id="action-banner"></section>
+    <div class="action-sections" id="action-sections"></div>
 
-    <!-- AI Safety Action Sections -->
-    <div class="action-sections">
+    <script>
+    /* ============================================================
+       SITE DATA TABLE — edit this like a spreadsheet to update
+       all CTA buttons, headlines, and links without touching HTML.
+       ============================================================ */
 
-        <!-- 01: The AI Safety Scorecard -->
-        <div class="action-section">
-            <div class="container">
-                <div class="action-section-inner">
-                    <div class="action-section-meta">
-                        <div class="action-number">01</div>
-                        <h2>The AI Safety Scorecard</h2>
-                    </div>
-                    <div class="action-section-body">
-                        <p class="action-hook">Your representative is already bought. Here's the receipt.</p>
-                        <p class="action-description">We track every elected official's votes, statements, and donor relationships on AI policy &mdash; updated in real time. Look yours up. Add their number as a contact. Let them know you're watching.</p>
-                        <a href="#" class="action-btn">Look up your rep</a>
-                        <div class="action-rationale">
-                            <p>This isn't a petition &mdash; it's accountability infrastructure. Politicians respond to constituents who demonstrate they're informed. A public, searchable, shareable scorecard creates social pressure in both directions: shame for inaction, recognition for courage. It becomes a media story in its own right, and it travels.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    var BANNER = {
+      label:     "Take Action",
+      headline:  "Everyone has a role in making AI safe.",
+      btnText:   "Find yours here",
+      btnHref:   "sms:+15055036413",          // ← SMS number for rep call script
+      note:      "Opens your SMS app \u2014 call your rep with our script, make your voice heard."
+    };
 
-        <!-- 02: The Citizen Assembly -->
-        <div class="action-section">
-            <div class="container">
-                <div class="action-section-inner">
-                    <div class="action-section-meta">
-                        <div class="action-number">02</div>
-                        <h2>The Citizen Assembly</h2>
-                    </div>
-                    <div class="action-section-body">
-                        <p class="action-hook">The most important conversation about AI has never included you. Until now.</p>
-                        <p class="action-description">We're convening 1,000 ordinary people &mdash; demographically representative of the country &mdash; to deliberate on AI policy and produce binding recommendations that legislators will be publicly asked to respond to. Apply to be one of them.</p>
-                        <a href="#" class="action-btn">Apply to participate</a>
-                        <div class="action-rationale">
-                            <p>Citizen assemblies have changed abortion law in Ireland, climate policy in France, and electoral reform in Canada. They work because they're legitimate &mdash; random selection, real deliberation, public accountability. This creates a new institution rather than pressuring an existing one, and the process itself becomes the story.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    var SECTIONS = [
+      /* num | title                    | hook                                                          | description                                                                                                                                                                                                   | btnText           | btnHref | rationale */
+      { num: "01", title: "The AI Safety Scorecard",
+        hook:        "Your representative is already bought. Here\u2019s the receipt.",
+        description: "We track every elected official\u2019s votes, statements, and donor relationships on AI policy \u2014 updated in real time. Look yours up. Add their number as a contact. Let them know you\u2019re watching.",
+        btnText:     "Look up your rep",
+        btnHref:     "#",                      // ← paste scorecard URL here
+        rationale:   "This isn\u2019t a petition \u2014 it\u2019s accountability infrastructure. Politicians respond to constituents who demonstrate they\u2019re informed. A public, searchable, shareable scorecard creates social pressure in both directions: shame for inaction, recognition for courage. It becomes a media story in its own right, and it travels." },
 
-        <!-- 03: The Red Line Registry -->
-        <div class="action-section">
-            <div class="container">
-                <div class="action-section-inner">
-                    <div class="action-section-meta">
-                        <div class="action-number">03</div>
-                        <h2>The Red Line Registry</h2>
-                    </div>
-                    <div class="action-section-body">
-                        <p class="action-hook">Some things should never be allowed. Say which ones. Out loud. On the record.</p>
-                        <p class="action-description">We're building a public registry of AI red lines &mdash; specific capabilities, uses, and deployments the public refuses to accept. No autonomous weapons. No AI that can replicate itself. No systems that can surveil your thoughts. Add your name to the lines that matter to you. Watch the registry become legislation.</p>
-                        <a href="#" class="action-btn">Draw your line</a>
-                        <div class="action-rationale">
-                            <p>Red lines are psychologically and politically distinct from general opposition &mdash; they're precise, they're firm, and they're actionable. A registry that itemizes specific prohibitions gives lawmakers something to vote on and gives the public a way to hold them to it. The act of drawing a line is itself an assertion of sovereignty.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      { num: "02", title: "The Citizen Assembly",
+        hook:        "The most important conversation about AI has never included you. Until now.",
+        description: "We\u2019re convening 1,000 ordinary people \u2014 demographically representative of the country \u2014 to deliberate on AI policy and produce binding recommendations that legislators will be publicly asked to respond to. Apply to be one of them.",
+        btnText:     "Apply to participate",
+        btnHref:     "#",                      // ← paste application form URL here
+        rationale:   "Citizen assemblies have changed abortion law in Ireland, climate policy in France, and electoral reform in Canada. They work because they\u2019re legitimate \u2014 random selection, real deliberation, public accountability. This creates a new institution rather than pressuring an existing one, and the process itself becomes the story." },
 
-        <!-- 04: The Parallel Parliament -->
-        <div class="action-section">
-            <div class="container">
-                <div class="action-section-inner">
-                    <div class="action-section-meta">
-                        <div class="action-number">04</div>
-                        <h2>The Parallel Parliament</h2>
-                    </div>
-                    <div class="action-section-body">
-                        <p class="action-hook">Governments move too slowly. We're not waiting.</p>
-                        <p class="action-description">We're convening a global shadow parliament on AI &mdash; delegates from every country, elected by their communities, deliberating in public and producing enforceable recommendations. Not advisory. Not symbolic. Designed from the start to generate the political legitimacy that existing institutions have failed to produce.</p>
-                        <a href="#" class="action-btn">Elect your delegate</a>
-                        <div class="action-rationale">
-                            <p>This is the most structurally ambitious initiative in the library &mdash; and that's the point. Some moments require new institutions, not just pressure on old ones. A parallel parliament creates its own news cycle, its own legitimacy, and its own escalation pathway. The act of building it is itself a declaration that the existing process has failed and the public is taking over.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      { num: "03", title: "The Red Line Registry",
+        hook:        "Some things should never be allowed. Say which ones. Out loud. On the record.",
+        description: "We\u2019re building a public registry of AI red lines \u2014 specific capabilities, uses, and deployments the public refuses to accept. No autonomous weapons. No AI that can replicate itself. No systems that can surveil your thoughts. Add your name to the lines that matter to you. Watch the registry become legislation.",
+        btnText:     "Draw your line",
+        btnHref:     "#",                      // ← paste registry URL here
+        rationale:   "Red lines are psychologically and politically distinct from general opposition \u2014 they\u2019re precise, they\u2019re firm, and they\u2019re actionable. A registry that itemizes specific prohibitions gives lawmakers something to vote on and gives the public a way to hold them to it. The act of drawing a line is itself an assertion of sovereignty." },
 
-    </div>
+      { num: "04", title: "The Parallel Parliament",
+        hook:        "Governments move too slowly. We\u2019re not waiting.",
+        description: "We\u2019re convening a global shadow parliament on AI \u2014 delegates from every country, elected by their communities, deliberating in public and producing enforceable recommendations. Not advisory. Not symbolic. Designed from the start to generate the political legitimacy that existing institutions have failed to produce.",
+        btnText:     "Elect your delegate",
+        btnHref:     "#",                      // ← paste delegate election URL here
+        rationale:   "This is the most structurally ambitious initiative in the library \u2014 and that\u2019s the point. Some moments require new institutions, not just pressure on old ones. A parallel parliament creates its own news cycle, its own legitimacy, and its own escalation pathway. The act of building it is itself a declaration that the existing process has failed and the public is taking over." }
+    ];
+
+    /* ============================================================
+       Renderer — no edits needed below this line
+       ============================================================ */
+    (function () {
+      var banner = document.getElementById('action-banner');
+      banner.innerHTML =
+        '<div class="container">' +
+          '<div class="action-banner-label">' + BANNER.label + '</div>' +
+          '<h2>' + BANNER.headline + '</h2>' +
+          '<a href="' + BANNER.btnHref + '" class="action-banner-btn">' + BANNER.btnText + '</a>' +
+          '<p class="action-banner-note">' + BANNER.note + '</p>' +
+        '</div>';
+
+      var wrap = document.getElementById('action-sections');
+      wrap.innerHTML = SECTIONS.map(function (s) {
+        return (
+          '<div class="action-section">' +
+            '<div class="container">' +
+              '<div class="action-section-inner">' +
+                '<div class="action-section-meta">' +
+                  '<div class="action-number">' + s.num + '</div>' +
+                  '<h2>' + s.title + '</h2>' +
+                '</div>' +
+                '<div class="action-section-body">' +
+                  '<p class="action-hook">' + s.hook + '</p>' +
+                  '<p class="action-description">' + s.description + '</p>' +
+                  '<a href="' + s.btnHref + '" class="action-btn">' + s.btnText + '</a>' +
+                  '<div class="action-rationale"><p>' + s.rationale + '</p></div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        );
+      }).join('');
+    })();
+    </script>
 
     <!-- Footer -->
     <footer>
