@@ -493,13 +493,6 @@
             <input type="email" id="d-email" placeholder="you@example.com" autocomplete="email">
             <div class="field-error" id="d-email-err">Please enter a valid email address.</div>
           </div>
-          <div class="field">
-            <label for="d-phone">
-              Phone
-              <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px">(optional)</span>
-            </label>
-            <input type="tel" id="d-phone" placeholder="+1 (555) 000-0000" autocomplete="tel">
-          </div>
           <button class="btn-primary" id="d-submit" onclick="handleDesktopSubmit()">
             Take the wheel
           </button>
@@ -869,26 +862,19 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Joining…';
     emailInput.disabled = true;
-    document.getElementById('d-phone').disabled = true;
 
-    // ── TODO: Replace with real backend call ────────────────────────────────
-    // Example:
-    // fetch('/api/join', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     email: emailVal,
-    //     phone: document.getElementById('d-phone').value.trim()
-    //   })
-    // }).then(function(r) { if (!r.ok) throw new Error(); });
-    // ────────────────────────────────────────────────────────────────────────
+    // ── Formspree: go to https://formspree.io, create a free form,
+    //    then replace YOUR_FORM_ID below with the ID they give you.
+    //    Submissions appear in your Formspree dashboard → export as CSV/Excel.
+    fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email: emailVal })
+    }).catch(function() { /* silent fail — animation still plays */ });
 
-    // Simulate success (front-end only for now)
-    setTimeout(function() {
-      submitBtn.style.display = 'none';
-      successBox.classList.add('show');
-      triggerJoinAnimation();
-    }, 450);
+    submitBtn.style.display = 'none';
+    successBox.classList.add('show');
+    triggerJoinAnimation();
   }
 
   // ── Mobile SMS tap ──────────────────────────────────────────────────────────
@@ -912,13 +898,12 @@
       return;
     }
 
-    // ── TODO: Replace with real backend call ────────────────────────────────
-    // fetch('/api/join', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ email: val })
-    // });
-    // ────────────────────────────────────────────────────────────────────────
+    // Same Formspree endpoint — replace YOUR_FORM_ID to match the desktop form above
+    fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email: val })
+    }).catch(function() {});
 
     input.style.borderColor = 'var(--safe)';
     input.disabled = true;
@@ -937,7 +922,7 @@
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
       var a = document.activeElement;
-      if (a && (a.id === 'd-email' || a.id === 'd-phone')) {
+      if (a && a.id === 'd-email') {
         handleDesktopSubmit();
       }
       if (a && a.id === 'm-email') {
